@@ -8,6 +8,8 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.data_entry_flow import FlowResult
 
+from homeassistant.helpers import selector
+
 from .const import CONF_PUBLIC_KEY, DOMAIN
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -24,7 +26,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 step_id="user",
                 data_schema=vol.Schema(
                     {
-                        vol.Required(CONF_PUBLIC_KEY): str,
+                        vol.Required(CONF_PUBLIC_KEY): selector.TextSelector(
+                            selector.TextSelectorConfig(multiline=True)
+                        ),
                     }
                 ),
             )
@@ -36,7 +40,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 step_id="user",
                 data_schema=vol.Schema(
                     {
-                        vol.Required(CONF_PUBLIC_KEY): str,
+                        vol.Required(CONF_PUBLIC_KEY): selector.TextSelector(
+                            selector.TextSelectorConfig(multiline=True)
+                        ),
                     }
                 ),
                 errors={"base": "invalid_pem"},
